@@ -23,36 +23,36 @@ MainFrame::MainFrame(const wxString& title) : wxFrame(nullptr, wxID_ANY, title) 
 
 	// -1 : valeur par défaut
 	// la label : "TextCtrl - editable" est la valeur qui s'affiche avant que l'utilisateur ne tape quelque chose
-	// on place une entrée de texte
-	wxTextCtrl* textCtrl = new wxTextCtrl(panel, wxID_ANY, "TextCtrl - editable", wxPoint(500, 145), wxSize(200, -1));
+	// on place une entrée de texte / avec un style password
+	wxTextCtrl* textCtrl = new wxTextCtrl(panel, wxID_ANY, "TextCtrl - editable", wxPoint(500, 145), wxSize(200, -1), wxTE_PASSWORD);
 
-	//wxSlider(le parent du bouton, une id,valeur initiale, valeur min, valeur max, position, taille)
-	wxSlider* slider = new wxSlider(panel, wxID_ANY, 25, 0, 100, wxPoint(100, 250), wxSize(200, -1));
+	//wxSlider(le parent du bouton, une id,valeur initiale, valeur min, valeur max, position, taille) // style qui affiche la valeur
+	wxSlider* slider = new wxSlider(panel, wxID_ANY, 25, 0, 100, wxPoint(100, 250), wxSize(200, -1), wxSL_VALUE_LABEL);
 
-	// wxGauge(le parent du bouton, une id,valeur initiale, valeur max, position, taille)
-	wxGauge* gauge = new wxGauge(panel, wxID_ANY, 100, wxPoint(500, 255), wxSize(200, -1));
+	// wxGauge(le parent du bouton, une id,valeur initiale, valeur max, position, taille) / style vertical
+	wxGauge* gauge = new wxGauge(panel, wxID_ANY, 100, wxPoint(590, 205), wxSize(-1, 125), wxGA_VERTICAL);
 	// on met la valeur à 50 (elle n'est modifiable que dans le code)
 	gauge->SetValue(50);
 
 	// On stocke les différents choix possible
 	wxArrayString choices;
-	choices.Add("Item A");
-	choices.Add("Item B");
 	choices.Add("Item C");
-	// On affiche le choix multiple
-	wxChoice* choice = new wxChoice(panel, wxID_ANY, wxPoint(150, 375), wxSize(100, -1), choices);
+	choices.Add("Item B");
+	choices.Add("Item A");
+	// On affiche le choix multiple / style qui trie de manière  alphabétique
+	wxChoice* choice = new wxChoice(panel, wxID_ANY, wxPoint(150, 375), wxSize(100, -1), choices, wxCB_SORT);
 	// On en choisi un par défaut
 	choice->Select(0);
 
 	// on doit include <wx/spinctrl.h>
-	// On peut également set un max/min
-	wxSpinCtrl* spinCtrl = new wxSpinCtrl(panel, wxID_ANY, "", wxPoint(550, 375), wxSize(100, -1));
+	// On peut également set un max/min   / Style qui fait que si on décrémente la val min on arrive à la val max
+	wxSpinCtrl* spinCtrl = new wxSpinCtrl(panel, wxID_ANY, "", wxPoint(550, 375), wxSize(100, -1), wxSP_WRAP);
 
-	// Ressemble aux différents choix possibles
-	wxListBox* listBox = new wxListBox(panel, wxID_ANY, wxPoint(150, 475), wxSize(100, -1), choices);
+	// Ressemble aux différents choix possibles / style qui accepte la sélection multiple
+	wxListBox* listBox = new wxListBox(panel, wxID_ANY, wxPoint(150, 475), wxSize(100, -1), choices, wxLB_MULTIPLE);
 
-	// RadioBox
-	wxRadioBox* radioBox = new wxRadioBox(panel, wxID_ANY, "RadioBox", wxPoint(485, 475), wxDefaultSize, choices);
+	// RadioBox / style, on peut choisir le nombre de choix par ligne
+	wxRadioBox* radioBox = new wxRadioBox(panel, wxID_ANY, "RadioBox", wxPoint(555, 450), wxDefaultSize, choices,2);
 	
 }
 
