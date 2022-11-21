@@ -12,7 +12,7 @@ endif (MSVC)
 find_package(wxWidgets REQUIRED COMPONENTS net core base)
 include(${wxWidgets_USE_FILE})
 
-add_executable(test_wxwidgets test_wxwidgets.cpp)
+add_executable(test_wxwidgets test_wxwidgets.cpp  )
 
 if(MSVC)
     set_target_properties(test_wxwidgets PROPERTIES LINK_FLAGS /SUBSYSTEM:WINDOWS)

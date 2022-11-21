@@ -2,6 +2,8 @@
 #include <wx/wx.h>
 #include <wx/spinctrl.h>
 
+/*
+// -------------- GESTION DES CONTROLLERS ---------------
 // wxFrame(Parent de la fenêtre, une id, le titre, la position, la taille en prenant en compte les bordures)
 // Code du constructeur
 MainFrame::MainFrame(const wxString& title) : wxFrame(nullptr, wxID_ANY, title) {
@@ -54,6 +56,67 @@ MainFrame::MainFrame(const wxString& title) : wxFrame(nullptr, wxID_ANY, title) 
 	// RadioBox / style, on peut choisir le nombre de choix par ligne
 	wxRadioBox* radioBox = new wxRadioBox(panel, wxID_ANY, "RadioBox", wxPoint(555, 450), wxDefaultSize, choices,2);
 	
+}
+*/
+
+// -------------- GESTION DES EVENTS STATIQUES ---------------
+// Nous avons besoin d'id custom, elle doivent suivre certaines règles :
+// - Doivent être positives
+// - Ne peuvent pas être 0 et 1
+// - Ne peuvent pas être comprise entre wxID_LOWEST(4999) et wxID_HIGHEST(5999)
+enum IDs {
+	BUTTON_ID = 2,
+	SLIDER_ID = 3,
+	TEXT_ID = 4
+};
+
+// On start la table des events, avec comme paramètre la classe ou l'on a defini la table des events et sa classe de base
+wxBEGIN_EVENT_TABLE(MainFrame, wxFrame)
+	// On relie OnButtonClicked et BUTTON_ID
+	EVT_BUTTON(BUTTON_ID, MainFrame::OnButtonClicked)
+	// On relie OnSliderChanged et SLIDER_ID
+	EVT_SLIDER(SLIDER_ID, MainFrame::OnSliderChanged)
+	// On relie OnTextChanged et TEXT_ID
+	EVT_TEXT(TEXT_ID, MainFrame::OnTextChanged)
+// On ferme la table
+wxEND_EVENT_TABLE()
+
+MainFrame::MainFrame(const wxString& title) : wxFrame(nullptr, wxID_ANY, title) {
+	wxPanel* panel = new wxPanel(this);
+
+	// Bouton avec l'id 2
+	wxButton* button = new wxButton(panel, BUTTON_ID, "Button", wxPoint(300, 275), wxSize(200, 50));
+
+	// On ajoute un slider avec l'id 3
+	wxSlider* slider = new wxSlider(panel, SLIDER_ID, 0, 0, 100, wxPoint(300, 200), wxSize(200, -1));
+
+	// On affiche une entrée de texte avec l'id 4
+	wxTextCtrl* text = new wxTextCtrl(panel, TEXT_ID, "", wxPoint(300, 375), wxSize(200, -1));
+
+	// affiche une barre de status en bas de la fenêtre ou nous pouvons mettre du texte
+	CreateStatusBar();
+}
+
+// Lorsque l'on clique sur le bouton
+void MainFrame::OnButtonClicked(wxCommandEvent& evt) {
+	// Quand le bouton est cliqué on affiche dans la bare de status "Button Clicked"
+	wxLogStatus("Button Clicked");
+}
+
+// Lorsque l'on modifie le slider
+void MainFrame::OnSliderChanged(wxCommandEvent& evt) {
+	// On récupère la valeur du slider et on la formate en string
+	wxString str = wxString::Format("Slider Valeur: %d", evt.GetInt());
+	// On l'affiche
+	wxLogStatus(str);
+}
+
+// Lorsque l'on modifie le texte
+void MainFrame::OnTextChanged(wxCommandEvent& evt) {
+	// On récupère le texte et on le formate en string
+	wxString str = wxString::Format("Text: %s", evt.GetString());
+	// On l'affiche
+	wxLogStatus(str);
 }
 
 // Pour dire à wxwidget quelle classe représente notre application
