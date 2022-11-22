@@ -46,6 +46,11 @@ private:
 	/*
 	void OnMouseEvent(wxMouseEvent& evt);
 	*/
+
+	// -------------- KEYBOARD EVENTS ---------------
+	/*
+	void OnKeyEvent(wxKeyEvent& evt);
+	*/
 };
 
 // Une classe qui représente l'app

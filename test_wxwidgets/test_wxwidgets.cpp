@@ -242,6 +242,59 @@ void MainFrame::OnMouseEvent(wxMouseEvent& evt) {
 }
 */
 
+// -------------- KEYBOARD EVENTS ---------------
+/*
+MainFrame::MainFrame(const wxString& title) : wxFrame(nullptr, wxID_ANY, title) {
+	wxPanel* panel = new wxPanel(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxWANTS_CHARS); // Style pour éviter un bug de son mais on ne peut plus faire tab pour changer de focus
+
+	wxButton* btn1 = new wxButton(panel, wxID_ANY, "Button 1", wxPoint(300, 150), wxSize(200, 100));
+	wxButton* btn2 = new wxButton(panel, wxID_ANY, "Button 2", wxPoint(300, 350), wxSize(200, 100));
+	// La détection de caractère ne marche plus, elle est lié au panel or nous avons le focus sur les boutons
+
+	//panel->Bind(wxEVT_KEY_DOWN, &MainFrame::OnKeyEvent, this);
+	//btn1->Bind(wxEVT_KEY_DOWN, &MainFrame::OnKeyEvent, this);
+	//btn2->Bind(wxEVT_KEY_DOWN, &MainFrame::OnKeyEvent, this);
+	// Pour savoir quand la touche est laché : wxEVT_KEY_UP
+	// wxEVT_CHAR : permet de prendre en comptre des combinaison de touches
+
+	// On récupère tous les key events peut importe ce qui est focus
+	panel->Bind(wxEVT_CHAR_HOOK, &MainFrame::OnKeyEvent, this);
+
+	CreateStatusBar();
+}
+
+void MainFrame::OnKeyEvent(wxKeyEvent& evt) {
+	// Pour résoudre le problème de focus à cause de wxWANTS_CHARS
+	if (evt.GetKeyCode() == WXK_TAB) {
+		wxWindow* window = (wxWindow*)evt.GetEventObject();
+		window->Navigate();
+	}
+
+	// Si la lettre tapé est A
+	if (evt.GetUnicodeKey() == 'A') {
+		wxLogStatus("A was pressed");
+	}
+	// Sinon si on tape maj
+	else if (evt.GetKeyCode() == WXK_SHIFT) {
+		wxLogStatus("Shift was pressed!");
+	}
+	else {
+		// On récupère le caractère 
+		wxChar keyChar = evt.GetUnicodeKey();
+
+		// Si le caractère n'est pas reconnu (maj ect..)
+		if (keyChar == WXK_NONE) {
+			// On récupère le code du caractère
+			int keyCode = evt.GetKeyCode();
+			wxLogStatus("Key Event %d", keyCode);
+		}
+		else {
+			wxLogStatus("Key Event %c", keyChar);
+		}
+	}
+}
+*/
+
 // -------------- CREATION DE L'APP ---------------
 // Pour dire à wxwidget quelle classe représente notre application
 wxIMPLEMENT_APP(App);
