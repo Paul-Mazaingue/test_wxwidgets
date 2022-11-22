@@ -23,11 +23,22 @@ private:
 	wxDECLARE_EVENT_TABLE();
 	*/
 
+	/*
 	// -------------- GESTION DES EVENTS DYNAMIQUE ---------------
 	void OnButtonClicked(wxCommandEvent& evt);
 	void OnSliderChanged(wxCommandEvent& evt);
 	void OnTextChanged(wxCommandEvent& evt);
+	*/
 
+	// -------------- EVENT PROPAGATION ---------------
+	// Méthode quand n'importe quel bouton est cliqué
+	void OnAnyButtonClicked(wxCommandEvent& evt);
+	// Méthode quand button1 est cliqué
+	void OnButton1Clicked(wxCommandEvent& evt);
+	// Méthode quand button2 est cliqué
+	void OnButton2Clicked(wxCommandEvent& evt);
+	// Méthode pour fermer la fenêtre
+	void OnClose(wxCloseEvent& evt);
 };
 
 // Une classe qui représente l'app
