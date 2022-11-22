@@ -11,8 +11,8 @@ public:
 	// Le constructeur qui prend le titre de la fenêtre en paramètre
 	MainFrame(const wxString& title);
 private:
-	/*
 	// -------------- GESTION DES EVENTS STATIQUES ---------------
+	/*
 	// Méthode pour quand l'on clique sur le bouton
 	void OnButtonClicked(wxCommandEvent& evt);
 	// Méthode pour quand l'on bouge le slider
@@ -23,14 +23,15 @@ private:
 	wxDECLARE_EVENT_TABLE();
 	*/
 
-	/*
 	// -------------- GESTION DES EVENTS DYNAMIQUE ---------------
+	/*
 	void OnButtonClicked(wxCommandEvent& evt);
 	void OnSliderChanged(wxCommandEvent& evt);
 	void OnTextChanged(wxCommandEvent& evt);
 	*/
 
 	// -------------- EVENT PROPAGATION ---------------
+	/*
 	// Méthode quand n'importe quel bouton est cliqué
 	void OnAnyButtonClicked(wxCommandEvent& evt);
 	// Méthode quand button1 est cliqué
@@ -39,6 +40,12 @@ private:
 	void OnButton2Clicked(wxCommandEvent& evt);
 	// Méthode pour fermer la fenêtre
 	void OnClose(wxCloseEvent& evt);
+	*/
+
+	// -------------- MOUSE EVENTS ---------------
+	/*
+	void OnMouseEvent(wxMouseEvent& evt);
+	*/
 };
 
 // Une classe qui représente l'app

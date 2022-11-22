@@ -2,8 +2,9 @@
 #include <wx/wx.h>
 #include <wx/spinctrl.h>
 
+// -------------- LES CONTROLLERS ---------------
 /*
-// -------------- GESTION DES CONTROLLERS ---------------
+
 // wxFrame(Parent de la fenêtre, une id, le titre, la position, la taille en prenant en compte les bordures)
 // Code du constructeur
 MainFrame::MainFrame(const wxString& title) : wxFrame(nullptr, wxID_ANY, title) {
@@ -59,8 +60,9 @@ MainFrame::MainFrame(const wxString& title) : wxFrame(nullptr, wxID_ANY, title) 
 }
 */
 
-/*
 // -------------- GESTION DES EVENTS STATIQUES ---------------
+/*
+
 // Nous avons besoin d'id custom, elle doivent suivre certaines règles :
 // - Doivent être positives
 // - Ne peuvent pas être 0 et 1
@@ -121,8 +123,9 @@ void MainFrame::OnTextChanged(wxCommandEvent& evt) {
 }
 */
 
-/*
 // -------------- GESTION DES EVENTS DYNAMIQUE ---------------
+/*
+
 // Nous n'avons pas besoin d'id prédéfinie
 MainFrame::MainFrame(const wxString& title) : wxFrame(nullptr, wxID_ANY, title) {
 	wxPanel* panel = new wxPanel(this);
@@ -157,6 +160,7 @@ void MainFrame::OnTextChanged(wxCommandEvent& evt) {
 */
 
 // -------------- EVENT PROPAGATION ---------------
+/*
 
 MainFrame::MainFrame(const wxString& title) : wxFrame(nullptr, wxID_ANY, title) {
 	wxPanel* panel = new wxPanel(this);
@@ -202,6 +206,41 @@ void MainFrame::OnClose(wxCloseEvent& evt) {
 	// Pour pouvoir fermer la fenêtre
 	evt.Skip();
 }
+*/
+
+// -------------- MOUSE EVENTS ---------------
+/*
+MainFrame::MainFrame(const wxString& title) : wxFrame(nullptr, wxID_ANY, title) {
+	wxPanel* panel = new wxPanel(this);
+
+	// Pour régler quelque problème de clignotrement
+	wxStatusBar* statusBar = CreateStatusBar();
+	statusBar->SetDoubleBuffered(true);
+
+	// Quand on fait un clique gauche -> OnMouseEvent
+	// D'autre event sont par exemple wxEVT_RIGHT_DOWN / wxEVT_MIDDLE_DOWN / wxEVT_LEFT_DCLICK ect...
+	//panel->Bind(wxEVT_LEFT_DOWN, &MainFrame::OnMouseEvent, this);
+
+	// Quand on fait bouger la souri
+	panel->Bind(wxEVT_MOTION, &MainFrame::OnMouseEvent, this);
+
+	wxButton* button = new wxButton(panel, wxID_ANY, "Button", wxPoint(300, 250), wxSize(200, 100));
+	// Pour faire marcher la détection de mouvement sur le bouton
+	button->Bind(wxEVT_MOTION, &MainFrame::OnMouseEvent, this);
+}
+
+void MainFrame::OnMouseEvent(wxMouseEvent& evt) {
+	// On récupère la position de la souri par rapport à l'objet sur lequel on est
+	//wxPoint mousePos = evt.GetPosition();
+	// On récupère la position de la souri par rapport à l'écran
+	wxPoint mousePos = wxGetMousePosition();
+	mousePos = this->ScreenToClient(mousePos); // On converti les coordonées par rapport à celle de la fenêtre
+
+	wxString message = wxString::Format("Mouse Event Detected! (x=%d y=%d)", mousePos.x, mousePos.y);
+
+	wxLogStatus(message);
+}
+*/
 
 // -------------- CREATION DE L'APP ---------------
 // Pour dire à wxwidget quelle classe représente notre application
