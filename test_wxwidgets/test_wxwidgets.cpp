@@ -59,6 +59,7 @@ MainFrame::MainFrame(const wxString& title) : wxFrame(nullptr, wxID_ANY, title) 
 }
 */
 
+/*
 // -------------- GESTION DES EVENTS STATIQUES ---------------
 // Nous avons besoin d'id custom, elle doivent suivre certaines règles :
 // - Doivent être positives
@@ -118,6 +119,42 @@ void MainFrame::OnTextChanged(wxCommandEvent& evt) {
 	// On l'affiche
 	wxLogStatus(str);
 }
+*/
+
+
+// -------------- GESTION DES EVENTS DYNAMIQUE ---------------
+// Nous n'avons pas besoin d'id prédéfinie
+MainFrame::MainFrame(const wxString& title) : wxFrame(nullptr, wxID_ANY, title) {
+	wxPanel* panel = new wxPanel(this);
+
+	wxButton* button = new wxButton(panel, wxID_ANY, "Button", wxPoint(300, 275), wxSize(200, 50));
+	wxSlider* slider = new wxSlider(panel, wxID_ANY, 0, 0, 100, wxPoint(300, 200), wxSize(200, -1));
+	wxTextCtrl* text = new wxTextCtrl(panel, wxID_ANY, "", wxPoint(300, 375), wxSize(200, -1));
+
+	// On relie le bouton à OnButtonClicked / Bind(l'event déclencheur, pointeur sur la méthode, l'objet qui va s'occuper de l'event)
+	button->Bind(wxEVT_BUTTON, &MainFrame::OnButtonClicked, this);
+	slider->Bind(wxEVT_SLIDER, &MainFrame::OnSliderChanged, this);
+	text->Bind(wxEVT_TEXT, &MainFrame::OnTextChanged, this);
+
+	// Pour retirer un lien
+	button->Unbind(wxEVT_BUTTON, &MainFrame::OnButtonClicked, this);
+	CreateStatusBar();
+}
+
+void MainFrame::OnButtonClicked(wxCommandEvent& evt) {
+	wxLogStatus("Button Clicked");
+}
+
+void MainFrame::OnSliderChanged(wxCommandEvent& evt) {
+	wxString str = wxString::Format("Slider Valeur: %d", evt.GetInt());
+	wxLogStatus(str);
+}
+
+void MainFrame::OnTextChanged(wxCommandEvent& evt) {
+	wxString str = wxString::Format("Text: %s", evt.GetString());
+	wxLogStatus(str);
+}
+
 
 // Pour dire à wxwidget quelle classe représente notre application
 wxIMPLEMENT_APP(App);
